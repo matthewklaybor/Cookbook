@@ -11,6 +11,7 @@ struct CookbookView: View {
     @Environment(CookbookRepository.self) var cookbookRepository
     
     var body: some View {
+        @Bindable var cookbookRepository = cookbookRepository
         NavigationStack {
             List(cookbookRepository.categories) { category in
                 CategoryView(category: category)
@@ -20,6 +21,14 @@ struct CookbookView: View {
             .refreshable {
                 await cookbookRepository.refreshCategories()
             }
+            .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingCategories, actions: {
+                Button(LocalizedStringKey("Ok"), role: .cancel, action: {})
+                Button(LocalizedStringKey("Retry")) {
+                    Task { await cookbookRepository.refreshCategories() }
+                }
+            }, message: {
+                Text(LocalizedStringKey("serviceError"))
+            })
         }
     }
 }

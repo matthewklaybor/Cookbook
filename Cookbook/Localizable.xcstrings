@@ -1,14 +1,55 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "A error occurred while getting the app ready. Please terminate and reopen the app." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A error occurred while getting the app ready. Please terminate and reopen the app."
+          }
+        }
+      }
+    },
     "Cookbook" : {
+
+    },
+    "Error" : {
 
     },
     "Ingredients" : {
 
     },
+    "initializationErrorMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred while getting the app ready.  If problem persists please check to make sure a valid internet connection is established."
+          }
+        }
+      }
+    },
+    "Ok" : {
+
+    },
     "Recipe" : {
 
+    },
+    "Retry" : {
+
+    },
+    "serviceError" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred. If problem persists please check to make sure a valid internet connection is established."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

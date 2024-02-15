@@ -16,6 +16,7 @@ struct RecipeView: View {
 //    @Query private var images: [CookbookMedia]
     
     var body: some View {
+        @Bindable var cookbookRepository = cookbookRepository
         VStack {
             if let recipe = cookbookRepository.recipes[meal.idMeal]?.first {
                 List {
@@ -58,6 +59,14 @@ struct RecipeView: View {
         .task {
             await cookbookRepository.fetchRecipe(mealId: meal.idMeal)
         }
+        .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingRecipe, actions: {
+            Button(LocalizedStringKey("Ok")) {}
+            Button(LocalizedStringKey("Retry")) {
+                Task { await cookbookRepository.fetchRecipe(mealId: meal.idMeal) }
+            }
+        }, message: {
+            Text(LocalizedStringKey("serviceError"))
+        })
     }
 }
 

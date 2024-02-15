@@ -11,7 +11,10 @@ import SwiftUI
 class CookbookRepository {
     private let recipeService = TheMealDBService()
     
-    private(set) var errorOccurred: Bool = false
+    var initializationErrorOccurred: Bool = false
+    var errorFetchingCategories: Bool = false
+    var errorFetchingMeals: Bool = false
+    var errorFetchingRecipe: Bool = false
     private(set) var isInitialized: Bool = false
     private(set) var categories: [MealCategory] = []
     private(set) var meals: [String: [Meal]] = [:]
@@ -24,8 +27,9 @@ class CookbookRepository {
         case .success(let response): 
             categories = response.categories.sorted()
             isInitialized = true
+            initializationErrorOccurred = false
         case .failure(_):
-            errorOccurred = true
+            initializationErrorOccurred = true
         }
     }
     
@@ -38,7 +42,7 @@ class CookbookRepository {
             meals.removeAll()
             recipes.removeAll()
         case .failure(_):
-            errorOccurred = true
+            errorFetchingCategories.toggle()
         }
     }
     
@@ -54,7 +58,7 @@ class CookbookRepository {
             meals[category] = response.meals.sorted()
             meals = meals
         case .failure(_):
-            errorOccurred = true
+            errorFetchingMeals.toggle()
         }
     }
     
@@ -66,7 +70,7 @@ class CookbookRepository {
             removeRecipes(category: category)
             meals[category] = response.meals.sorted()
         case .failure(_):
-            errorOccurred = true
+            errorFetchingMeals.toggle()
         }
     }
     
@@ -81,7 +85,7 @@ class CookbookRepository {
         case .success(let response):
             recipes[mealId] = response.recipes
         case .failure(_):
-            errorOccurred = true
+            errorFetchingRecipe.toggle()
         }
     }
     

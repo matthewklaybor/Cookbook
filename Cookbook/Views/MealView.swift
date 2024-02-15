@@ -18,6 +18,7 @@ struct MealView: View {
 //    @Query private var images: [CookbookMedia]
     
     var body: some View {
+        @Bindable var cookbookRepository = cookbookRepository
         VStack {
             if let meals = cookbookRepository.meals[category.strCategory] {
                 List(meals) { meal in
@@ -58,6 +59,14 @@ struct MealView: View {
             await cookbookRepository.refreshMeals(category: category.strCategory)
         }
         .navigationTitle(category.strCategory)
+        .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingMeals, actions: {
+            Button(LocalizedStringKey("Dismiss")) {}
+            Button(LocalizedStringKey("Retry")) {
+                Task { await cookbookRepository.fetchMeals(category: category.strCategory) }
+            }
+        }, message: {
+            Text(LocalizedStringKey("serviceError"))
+        })
     }
     
      // AsyncImageView without CoreData

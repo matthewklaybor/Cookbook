@@ -25,6 +25,15 @@ struct ContentView: View {
         .task {
             await cookbookRepository.initialize()
         }
+        .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.initializationErrorOccurred, actions: {
+            Button(LocalizedStringKey("Ok"), role: .cancel, action: {})
+            
+            Button(LocalizedStringKey("Retry")) {
+                Task { await cookbookRepository.initialize() }
+            }
+        }, message: {
+            Text(LocalizedStringKey("initializationErrorMessage"))
+        })
     }
 }
 
