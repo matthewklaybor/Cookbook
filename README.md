@@ -1,6 +1,6 @@
 <div align="center">
   <h3 align="center">Cookbook App</h3>
-  <p align="center">This project use the free Recipe API brought to you by the folks at TheMealDB.</p>
+  <p align="center">This project uses the free Recipe API brought to you by the folks at TheMealDB.</p>
   <p alight="center">Recipe API: https://themealdb.com/api.php</p>
 </div>
 
