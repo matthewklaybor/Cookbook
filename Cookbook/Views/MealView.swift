@@ -60,7 +60,7 @@ struct MealView: View {
         }
         .navigationTitle(category.strCategory)
         .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingMeals, actions: {
-            Button(LocalizedStringKey("Dismiss")) {}
+            Button(LocalizedStringKey("Ok")) {}
             Button(LocalizedStringKey("Retry")) {
                 Task { await cookbookRepository.fetchMeals(category: category.strCategory) }
             }
