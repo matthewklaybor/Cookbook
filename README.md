@@ -6,7 +6,7 @@
 
 ## About The Project
 
-The Cookbook App displays a list of meals along with their recipe grouped by food category.
+The Cookbook App for iOS displays a list of meals along with their recipe grouped by food category.
 
 ## Built With
 Xcode 15, iOS 17.2, Swift, SwiftUI, CoreData
