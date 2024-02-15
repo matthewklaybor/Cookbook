@@ -19,4 +19,4 @@ Xcode 15, iOS 17.2, Swift, SwiftUI, CoreData
 3. Run Cookbook App in Xcode
 
 ## License
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE.md` for more information.
