@@ -13,18 +13,18 @@ struct CookbookView: View {
     var body: some View {
         @Bindable var cookbookRepository = cookbookRepository
         NavigationStack {
-            List(cookbookRepository.categories) { category in
-                CategoryView(category: category)
+            List(cookbookRepository.mealCategories) { mealCategory in
+                MealCategoryView(mealCategory: mealCategory)
             }
             .navigationTitle(Text(LocalizedStringKey("Cookbook")))
             .listStyle(.grouped)
             .refreshable {
-                await cookbookRepository.refreshCategories()
+                await cookbookRepository.refreshMealCategories()
             }
-            .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingCategories, actions: {
+            .alert(LocalizedStringKey("Error"), isPresented: $cookbookRepository.errorFetchingMealCategories, actions: {
                 Button(LocalizedStringKey("Ok"), role: .cancel, action: {})
                 Button(LocalizedStringKey("Retry")) {
-                    Task { await cookbookRepository.refreshCategories() }
+                    Task { await cookbookRepository.refreshMealCategories() }
                 }
             }, message: {
                 Text(LocalizedStringKey("serviceError"))
@@ -36,6 +36,6 @@ struct CookbookView: View {
 #Preview {
     CookbookView()
         .environment(CookbookRepository())
-        .environment(MediaRepository())
+        .environment(ImageRepository())
         .environment(\.managedObjectContext, PersistentContainer().container.viewContext)
 }

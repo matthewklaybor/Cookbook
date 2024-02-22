@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var cookbookRepository = CookbookRepository()
-    @State private var mediaRepository = MediaRepository()
+    @State private var imageRepository = ImageRepository()
     
     var body: some View {
         VStack {
             if cookbookRepository.isInitialized {
                 CookbookView()
                     .environment(cookbookRepository)
-                    .environment(mediaRepository)
+                    .environment(imageRepository)
                     .transition(.opacity.animation(.easeInOut(duration: 0.2)))
             } else {
                 SplashView()

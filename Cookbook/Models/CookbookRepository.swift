@@ -12,20 +12,20 @@ class CookbookRepository {
     private let recipeService = TheMealDBService()
     
     var initializationErrorOccurred: Bool = false
-    var errorFetchingCategories: Bool = false
+    var errorFetchingMealCategories: Bool = false
     var errorFetchingMeals: Bool = false
     var errorFetchingRecipe: Bool = false
     private(set) var isInitialized: Bool = false
-    private(set) var categories: [MealCategory] = []
+    private(set) var mealCategories: [MealCategory] = []
     private(set) var meals: [String: [Meal]] = [:]
     private(set) var recipes: [String: [Recipe]] = [:]
     
     func initialize() async {
-        let result = await recipeService.fetchCategories()
+        let result = await recipeService.fetchMealCategories()
         
         switch result {
         case .success(let response): 
-            categories = response.categories.sorted()
+            mealCategories = response.categories.sorted()
             isInitialized = true
             initializationErrorOccurred = false
         case .failure(_):
@@ -33,16 +33,16 @@ class CookbookRepository {
         }
     }
     
-    func refreshCategories() async {
-        let result = await recipeService.fetchCategories()
+    func refreshMealCategories() async {
+        let result = await recipeService.fetchMealCategories()
         
         switch result {
         case .success(let response):
-            categories = response.categories.sorted()
+            mealCategories = response.categories.sorted()
             meals.removeAll()
             recipes.removeAll()
         case .failure(_):
-            errorFetchingCategories.toggle()
+            errorFetchingMealCategories.toggle()
         }
     }
     

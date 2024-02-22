@@ -8,84 +8,179 @@
 import Foundation
 
 struct Recipe: Decodable {
-    let idMeal: String?
     let strMeal: String?
-    let strDrinkAlternate: String?
-    let strCategory: String?
-    let strArea: String?
     let strInstructions: String?
-    let strMealThumb: String?
-    let strTags: String?
-    let strYoutube: String?
-    let strIngredient1: String?
-    let strIngredient2: String?
-    let strIngredient3: String?
-    let strIngredient4: String?
-    let strIngredient5: String?
-    let strIngredient6: String?
-    let strIngredient7: String?
-    let strIngredient8: String?
-    let strIngredient9: String?
-    let strIngredient10: String?
-    let strIngredient11: String?
-    let strIngredient12: String?
-    let strIngredient13: String?
-    let strIngredient14: String?
-    let strIngredient15: String?
-    let strIngredient16: String?
-    let strIngredient17: String?
-    let strIngredient18: String?
-    let strIngredient19: String?
-    let strIngredient20: String?
-    let strMeasure1: String?
-    let strMeasure2: String?
-    let strMeasure3: String?
-    let strMeasure4: String?
-    let strMeasure5: String?
-    let strMeasure6: String?
-    let strMeasure7: String?
-    let strMeasure8: String?
-    let strMeasure9: String?
-    let strMeasure10: String?
-    let strMeasure11: String?
-    let strMeasure12: String?
-    let strMeasure13: String?
-    let strMeasure14: String?
-    let strMeasure15: String?
-    let strMeasure16: String?
-    let strMeasure17: String?
-    let strMeasure18: String?
-    let strMeasure19: String?
-    let strMeasure20: String?
-    let strSource: String?
-    let strImageSource: String?
-    let strCreativeCommonsConfirmed: String?
-    let dateModified: String?
+    private(set) var ingredients: [Ingredient] = []
     
-    var ingredients: [Ingredient] {
-        var temp: [Ingredient] = []
+    enum CodingKeys: CodingKey {
+        case strMeal
+        case strInstructions
+        case strIngredient1
+        case strIngredient2
+        case strIngredient3
+        case strIngredient4
+        case strIngredient5
+        case strIngredient6
+        case strIngredient7
+        case strIngredient8
+        case strIngredient9
+        case strIngredient10
+        case strIngredient11
+        case strIngredient12
+        case strIngredient13
+        case strIngredient14
+        case strIngredient15
+        case strIngredient16
+        case strIngredient17
+        case strIngredient18
+        case strIngredient19
+        case strIngredient20
+        case strMeasure1
+        case strMeasure2
+        case strMeasure3
+        case strMeasure4
+        case strMeasure5
+        case strMeasure6
+        case strMeasure7
+        case strMeasure8
+        case strMeasure9
+        case strMeasure10
+        case strMeasure11
+        case strMeasure12
+        case strMeasure13
+        case strMeasure14
+        case strMeasure15
+        case strMeasure16
+        case strMeasure17
+        case strMeasure18
+        case strMeasure19
+        case strMeasure20
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.strMeal = try container.decodeIfPresent(String.self, forKey: .strMeal)
+        self.strInstructions = try container.decodeIfPresent(String.self, forKey: .strInstructions)
         
-        temp.append(Ingredient(id: "1", name: strIngredient1 ?? "", measurement: strMeasure1 ?? ""))
-        temp.append(Ingredient(id: "2", name: strIngredient2 ?? "", measurement: strMeasure2 ?? ""))
-        temp.append(Ingredient(id: "3", name: strIngredient3 ?? "", measurement: strMeasure3 ?? ""))
-        temp.append(Ingredient(id: "4", name: strIngredient4 ?? "", measurement: strMeasure4 ?? ""))
-        temp.append(Ingredient(id: "5", name: strIngredient5 ?? "", measurement: strMeasure5 ?? ""))
-        temp.append(Ingredient(id: "6", name: strIngredient6 ?? "", measurement: strMeasure6 ?? ""))
-        temp.append(Ingredient(id: "7", name: strIngredient7 ?? "", measurement: strMeasure7 ?? ""))
-        temp.append(Ingredient(id: "8", name: strIngredient8 ?? "", measurement: strMeasure8 ?? ""))
-        temp.append(Ingredient(id: "9", name: strIngredient9 ?? "", measurement: strMeasure9 ?? ""))
-        temp.append(Ingredient(id: "10", name: strIngredient10 ?? "", measurement: strMeasure10 ?? ""))
-        temp.append(Ingredient(id: "11", name: strIngredient11 ?? "", measurement: strMeasure11 ?? ""))
-        temp.append(Ingredient(id: "12", name: strIngredient12 ?? "", measurement: strMeasure12 ?? ""))
-        temp.append(Ingredient(id: "13", name: strIngredient13 ?? "", measurement: strMeasure13 ?? ""))
-        temp.append(Ingredient(id: "14", name: strIngredient14 ?? "", measurement: strMeasure14 ?? ""))
-        temp.append(Ingredient(id: "15", name: strIngredient15 ?? "", measurement: strMeasure15 ?? ""))
-        temp.append(Ingredient(id: "16", name: strIngredient16 ?? "", measurement: strMeasure16 ?? ""))
-        temp.append(Ingredient(id: "17", name: strIngredient17 ?? "", measurement: strMeasure17 ?? ""))
-        temp.append(Ingredient(id: "18", name: strIngredient18 ?? "", measurement: strMeasure18 ?? ""))
-        temp.append(Ingredient(id: "19", name: strIngredient19 ?? "", measurement: strMeasure19 ?? ""))
-        temp.append(Ingredient(id: "20", name: strIngredient20 ?? "", measurement: strMeasure20 ?? ""))
-
-        return temp
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient1),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure1),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "1", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient2),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure2),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "2", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient3),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure3),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "3", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient4),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure4),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "4", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient5),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure5),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "5", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient6),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure6),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "6", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient7),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure7),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "7", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient8),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure8),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "8", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient9),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure9),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "9", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient10),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure10),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "10", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient11),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure11),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "11", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient12),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure12),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "12", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient13),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure13),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "13", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient14),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure14),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "14", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient15),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure15),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "15", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient16),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure16),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "16", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient17),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure17),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "17", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient18),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure18),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "18", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient19),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure19),
+           !ingredient.isEmpty {
+            ingredients.append(Ingredient(id: "19", name: ingredient, measurement: measure))
+        }
+        
+        if let ingredient = try container.decodeIfPresent(String.self, forKey: .strIngredient20),
+           let measure = try container.decodeIfPresent(String.self, forKey: .strMeasure20),
+           !ingredient.isEmpty {
+            
+            ingredients.append(Ingredient(id: "20", name: ingredient, measurement: measure))
+        }
     }
 }

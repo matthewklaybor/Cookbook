@@ -23,7 +23,7 @@ class PersistentContainer {
     }()
     
     func deleteAll() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CookbookMedia")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CookbookImage")
         
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         deleteRequest.resultType = .resultTypeObjectIDs

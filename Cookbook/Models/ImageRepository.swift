@@ -1,5 +1,5 @@
 //
-//  MediaRepository.swift
+//  ImageRepository.swift
 //  Cookbook
 //
 //  Created by Matthew Klaybor on 2/13/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @Observable
-class MediaRepository {
+class ImageRepository {
     private let imageService = ImageService()
     private var urlCache: [String] = []
     
@@ -31,8 +31,4 @@ class MediaRepository {
         } 
         return nil
     }
-    
-//    private var imageCache: [String: Image] = [:]
-//    func storeImage(image: Image, name: String) { imageCache[name] = image }
-//    func imageCache(name: String) -> Image? { imageCache[name] }
 }

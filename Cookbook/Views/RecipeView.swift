@@ -11,9 +11,7 @@ import SwiftData
 struct RecipeView: View {
     let meal: Meal
     @Environment(CookbookRepository.self) var cookbookRepository
-    @FetchRequest(sortDescriptors: []) var images: FetchedResults<CookbookMedia>
-//    @Environment(MediaRepository.self) var mediaRepository
-//    @Query private var images: [CookbookMedia]
+    @FetchRequest(sortDescriptors: []) var images: FetchedResults<CookbookImage>
     
     var body: some View {
         @Bindable var cookbookRepository = cookbookRepository
@@ -21,8 +19,7 @@ struct RecipeView: View {
             if let recipe = cookbookRepository.recipes[meal.idMeal]?.first {
                 List {
                     Section {
-//                        if let image = mediaRepository.imageCache(name: meal.strMealThumb) { image.resizable().scaledToFit() }
-                        if let imageData = images.first(where: { $0.name == meal.strMealThumb })?.image, let image = UIImage(data: imageData) {
+                        if let imageData = images.first(where: { $0.name == meal.strMealThumb })?.data, let image = UIImage(data: imageData) {
                             Image(uiImage: image).resizable().scaledToFit()
                         }
                         if let instructions = recipe.strInstructions {
@@ -37,7 +34,7 @@ struct RecipeView: View {
                     }
                     
                     Section {
-                        ForEach(recipe.ingredients.filter({ !$0.name.isEmpty })) { ingredient in
+                        ForEach(recipe.ingredients) { ingredient in
                             HStack {
                                 Text(ingredient.name)
                                 Spacer()
@@ -79,6 +76,4 @@ struct RecipeView: View {
     }
     .environment(CookbookRepository())
     .environment(\.managedObjectContext, PersistentContainer().container.viewContext)
-//    .environment(MediaRepository())
-//    .modelContainer(for: CookbookMedia.self, inMemory: true)
 }
