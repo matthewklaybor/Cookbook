@@ -68,11 +68,9 @@ struct RecipeView: View {
 }
 
 #Preview {
-    NavigationStack {
-        Group {
-            RecipeView(meal: .init(strMeal: "Apple & Blackberry Crumble", strMealThumb: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg", idMeal: "52893"))
-            RecipeView(meal: .init(strMeal: "ProgressView Test", strMealThumb: "", idMeal: ""))
-        }
+    Group {
+        RecipeView(meal: .init(strMeal: "Apple & Blackberry Crumble", strMealThumb: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg", idMeal: "52893"))
+        RecipeView(meal: .init(strMeal: "ProgressView / Error Test", strMealThumb: "", idMeal: ""))
     }
     .environment(CookbookRepository())
     .environment(\.managedObjectContext, PersistentContainer().container.viewContext)
